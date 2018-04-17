@@ -1,0 +1,11 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [],
+    "changelogDate": "20180310161353",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "recommend",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}

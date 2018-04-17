@@ -1,0 +1,40 @@
+
+<div *ngIf="inventory">
+    <h2><span>Inventory</span> {{inventory.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Ingredient Name</span></dt>
+        <dd>
+            <span>{{inventory.ingredient_name}}</span>
+        </dd>
+        <dt><span>Quantity</span></dt>
+        <dd>
+            <span>{{inventory.quantity}}</span>
+        </dd>
+        <dt><span>User</span></dt>
+        <dd>
+            {{inventory.user?.login}}
+        </dd>
+        <dt><span>Category</span></dt>
+        <dd>
+            <div *ngIf="inventory.category">
+                <a [routerLink]="['/category', inventory.category?.id]">{{inventory.category?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'inventory/'+ inventory.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

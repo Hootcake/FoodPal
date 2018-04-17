@@ -1,0 +1,29 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "shopping_List"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "items",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "notes",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180319115740",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "shopping_list",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

@@ -1,0 +1,19 @@
+version: '2'
+services:
+    foodpal-app:
+        image: foodpal
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://foodpal-mysql:3306/foodpal?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=foodpal-elasticsearch:9300
+        ports:
+            - 8080:8080
+    foodpal-mysql:
+        extends:
+            file: mysql.yml
+            service: foodpal-mysql
+    foodpal-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: foodpal-elasticsearch

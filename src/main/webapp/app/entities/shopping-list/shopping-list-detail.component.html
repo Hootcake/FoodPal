@@ -1,0 +1,34 @@
+
+<div *ngIf="shopping_List">
+    <h2><span>Shopping List</span> {{shopping_List.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Items</span></dt>
+        <dd>
+            <span>{{shopping_List.items}}</span>
+        </dd>
+        <dt><span>Notes</span></dt>
+        <dd>
+            <span>{{shopping_List.notes}}</span>
+        </dd>
+        <dt><span>User</span></dt>
+        <dd>
+            {{shopping_List.user?.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'shopping-list/'+ shopping_List.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

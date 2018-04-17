@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-3">
+        <span class="hipster img-fluid rounded"></span>
+    </div>
+    <div class="col-md-9">
+        <h1 class="display-4">Welcome to your FoodPal!</h1>
+        <p class="lead">This is your homepage</p>
+        <div class="btn-group btn-group-toggle">
+		  <label class="btn-primary" ngbButtonLabel>
+		    <input type="checkbox" ngbButton [(ngModel)]="model.left" (change)="testFunc($event)"> Lacto-Vegetarian 
+		  </label>
+		  <label class="btn-primary" ngbButtonLabel>
+		    <input type="checkbox" ngbButton [(ngModel)]="model.middle"> ()
+		  </label>
+		</div>
+		<hr>
+		        <li *ngFor="let ingredient of ingredients">
+     				 {{ ingredient }} <button (click)="deleteIngredient(ingredient)" type="button" class="btn btn-danger btn-sm">Delete Ingredient</button>
+     				 <hr>
+     			</li>
+     			
+                <input class="search" [(ngModel)]="searchQuery" (keyup.enter)="searchRecipes(searchQuery, null)" placeholder="Enter Ingredient">
+        		<button (click)="searchRecipes(searchQuery)" type="button">Find Recipes</button>
+        		<p></p>
+					<div *ngFor="let recipe of recipes" class=container>
+					<hr>
+					<div class="panel panel-default">
+						<div class="panel-heading">{{recipe.recipeName}}</div>
+						<div class="panel-body">
+							<img src="{{ recipe.smallImageUrls}}"><p>
+							Rating: {{recipe.rating}}
+						</div>
+							<button class="btn btn-sm btn-outline-primary" (click)="searchDetail(recipe.id)">See more</button>            				
+						</div>
+	
+			</div>
+
+			
+			<div class="col-md-6 col-md-offset-3">
+
+ 
+</div>
+        </p>
+    </div>
+</div>

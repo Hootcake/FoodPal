@@ -1,0 +1,33 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "inventory",
+            "otherEntityName": "inventory",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "category"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "weighing",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20180130143420",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "category",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}
