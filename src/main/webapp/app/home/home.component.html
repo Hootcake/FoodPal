@@ -20,14 +20,14 @@
      			</li>
      			
                 <input class="search" [(ngModel)]="searchQuery" (keyup.enter)="searchRecipes(searchQuery, null)" placeholder="Enter Ingredient">
-        		<button (click)="searchRecipes(searchQuery)" type="button">Find Recipes</button>
+        		<button (click)="searchRecipes(searchQuery, null)" type="button">Find Recipes</button>
         		<p></p>
 					<div *ngFor="let recipe of recipes" class=container>
 					<hr>
 					<div class="panel panel-default">
 						<div class="panel-heading">{{recipe.recipeName}}</div>
 						<div class="panel-body">
-							<img src="{{ recipe.smallImageUrls}}"><p>
+							<img src="{{ recipe.smallImageUrls }}"><p>
 							Rating: {{recipe.rating}}
 						</div>
 							<button class="btn btn-sm btn-outline-primary" (click)="searchDetail(recipe.id)">See more</button>            				
