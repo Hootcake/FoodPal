@@ -23,7 +23,8 @@ import { Account, LoginModalService, Principal, RecipeListService } from '../sha
 })
 export class NgbdModalContent {
   @Input() name;
-
+  @Input() yield: string;
+  @Input() image: string;
   constructor(public activeModal: NgbActiveModal) {}
 }
 
