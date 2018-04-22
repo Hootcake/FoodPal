@@ -13,6 +13,8 @@ import {
     RecommendDeleteDialogComponent,
     recommendRoute,
     recommendPopupRoute,
+    NgbdModalContent, 
+    NgbdHelpContent
 } from './';
 
 const ENTITY_STATES = [
@@ -23,7 +25,8 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         FoodPalSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        
     ],
     declarations: [
         RecommendComponent,
@@ -32,6 +35,8 @@ const ENTITY_STATES = [
         RecommendDeleteDialogComponent,
         RecommendPopupComponent,
         RecommendDeletePopupComponent,
+        NgbdModalContent,
+        NgbdHelpContent
     ],
     entryComponents: [
         RecommendComponent,
@@ -39,6 +44,8 @@ const ENTITY_STATES = [
         RecommendPopupComponent,
         RecommendDeleteDialogComponent,
         RecommendDeletePopupComponent,
+        NgbdModalContent,
+        NgbdHelpContent
     ],
     providers: [
         RecommendService,

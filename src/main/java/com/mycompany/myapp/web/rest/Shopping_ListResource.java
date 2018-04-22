@@ -2,8 +2,9 @@ package com.mycompany.myapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.mycompany.myapp.domain.Shopping_List;
-
+import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.Shopping_ListRepository;
+import com.mycompany.myapp.repository.UserRepository;
 import com.mycompany.myapp.repository.search.Shopping_ListSearchRepository;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import com.mycompany.myapp.web.rest.util.HeaderUtil;
@@ -16,6 +17,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -36,16 +40,19 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class Shopping_ListResource {
 
     private final Logger log = LoggerFactory.getLogger(Shopping_ListResource.class);
-
+    
     private static final String ENTITY_NAME = "shopping_List";
 
     private final Shopping_ListRepository shopping_ListRepository;
-
+    
+    private final UserRepository userRepository;
+    
     private final Shopping_ListSearchRepository shopping_ListSearchRepository;
 
-    public Shopping_ListResource(Shopping_ListRepository shopping_ListRepository, Shopping_ListSearchRepository shopping_ListSearchRepository) {
+    public Shopping_ListResource(Shopping_ListRepository shopping_ListRepository, Shopping_ListSearchRepository shopping_ListSearchRepository, UserRepository userRepository) {
         this.shopping_ListRepository = shopping_ListRepository;
         this.shopping_ListSearchRepository = shopping_ListSearchRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -62,6 +69,9 @@ public class Shopping_ListResource {
         if (shopping_List.getId() != null) {
             throw new BadRequestAlertException("A new shopping_List cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        User user=new User();
+        user= userRepository.findOneByLogin(getCurrentUserLogin()).get();
+    	shopping_List.setUser(user);     
         Shopping_List result = shopping_ListRepository.save(shopping_List);
         shopping_ListSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/shopping-lists/" + result.getId()))
@@ -152,5 +162,18 @@ public class Shopping_ListResource {
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/shopping-lists");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+    
+    public String getCurrentUserLogin() {
+        org.springframework.security.core.context.SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        String login = null;
+        if (authentication != null)
+            if (authentication.getPrincipal() instanceof UserDetails)
+             login = ((UserDetails) authentication.getPrincipal()).getUsername();
+            else if (authentication.getPrincipal() instanceof String)
+             login = (String) authentication.getPrincipal();
+
+        return login; 
+        }
 
 }

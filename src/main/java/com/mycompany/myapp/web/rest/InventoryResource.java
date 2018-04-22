@@ -71,12 +71,12 @@ public class InventoryResource {
         if (inventory.getId() != null) {
             throw new BadRequestAlertException("A new inventory cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        if (!SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+
         	log.debug("No user passed in, using current user: {}", SecurityUtils.getCurrentUserLogin());
             User user=new User();
             user= userRepository.findOneByLogin(getCurrentUserLogin()).get();
         	inventory.setUser(user);        	
-        }
+        
         Inventory result = inventoryRepository.save(inventory);
         inventorySearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/inventories/" + result.getId()))

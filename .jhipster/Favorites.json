@@ -1,0 +1,37 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "favorites"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "recipe_title",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cuisine",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ingredients",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "source_URL",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180419111723",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "favorites",
+    "jpaMetamodelFiltering": false,
+    "pagination": "infinite-scroll"
+}

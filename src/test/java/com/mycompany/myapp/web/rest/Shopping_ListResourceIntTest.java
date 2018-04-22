@@ -4,6 +4,7 @@ import com.mycompany.myapp.FoodPalApp;
 
 import com.mycompany.myapp.domain.Shopping_List;
 import com.mycompany.myapp.repository.Shopping_ListRepository;
+import com.mycompany.myapp.repository.UserRepository;
 import com.mycompany.myapp.repository.search.Shopping_ListSearchRepository;
 import com.mycompany.myapp.web.rest.errors.ExceptionTranslator;
 
@@ -47,6 +48,9 @@ public class Shopping_ListResourceIntTest {
 
     @Autowired
     private Shopping_ListRepository shopping_ListRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private Shopping_ListSearchRepository shopping_ListSearchRepository;
@@ -70,7 +74,7 @@ public class Shopping_ListResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final Shopping_ListResource shopping_ListResource = new Shopping_ListResource(shopping_ListRepository, shopping_ListSearchRepository);
+        final Shopping_ListResource shopping_ListResource = new Shopping_ListResource(shopping_ListRepository, shopping_ListSearchRepository, userRepository);
         this.restShopping_ListMockMvc = MockMvcBuilders.standaloneSetup(shopping_ListResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

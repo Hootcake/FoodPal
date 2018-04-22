@@ -1,10 +1,10 @@
 <div>
     <h2>
-        <span>Your Inventory</span>
-        <button class="btn btn-primary float-right jh-create-entity create-inventory" [routerLink]="['/', { outlets: { popup: ['inventory-new'] } }]">
+        <span>Favorites</span>
+        <button class="btn btn-primary float-right jh-create-entity create-favorites" [routerLink]="['/', { outlets: { popup: ['favorites-new'] } }]">
             <span class="fa fa-plus"></span>
             <span class="hidden-sm-down" >
-            Add Ingredient to Inventory
+            Create new Favorites
             </span>
         </button>
     </h2>
@@ -25,48 +25,39 @@
         </div>
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="inventories">
+    <div class="table-responsive" *ngIf="favorites">
         <table class="table table-striped">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="ingredient_name"><span>Ingredient Name</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="quantity"><span>Quantity</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="recipe_title"><span>Recipe Title</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="cuisine"><span>Cuisine</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="ingredients"><span>Ingredients</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="source_URL"><span>Source URL</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="user.login"><span>User</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="category.name"><span>Category</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
-            <tbody>
-            <tr *ngFor="let inventory of inventories ;trackBy: trackId">
-                <td><a [routerLink]="['../inventory', inventory.id ]">{{inventory.id}}</a></td>
-                <td>{{inventory.ingredient_name}}</td>
-                <td>{{inventory.quantity}}</td>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let favorites of favorites ;trackBy: trackId">
+                <td><a [routerLink]="['../favorites', favorites.id ]">{{favorites.id}}</a></td>
+                <td>{{favorites.recipe_title}}</td>
+                <td>{{favorites.cuisine}}</td>
+                <td>{{favorites.ingredients}}</td>
+                <td>{{favorites.source_URL}}</td>
                 <td>
-                    {{inventory.user?.login}}
-                </td>
-                <td>
-                    <div *ngIf="inventory.category">
-                        <a [routerLink]="['../category', inventory.category?.id ]" >{{inventory.category?.name}}</a>
-                    </div>
-                </td>
-                <td>
-                	<div *ngIf="inventory.quantity < 5">
-                		<div class="alert alert-warning">
-  							<strong>Warning!</strong> Your stock on this item is running low!
-						</div>
-                	</div>
+                    {{favorites.user?.login}}
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['../inventory', inventory.id ]"
+                                [routerLink]="['../favorites', favorites.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="d-none d-md-inline">View</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'inventory/'+ inventory.id + '/edit'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'favorites/'+ favorites.id + '/edit'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-primary btn-sm">
@@ -74,7 +65,7 @@
                             <span class="d-none d-md-inline">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'inventory/'+ inventory.id + '/delete'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'favorites/'+ favorites.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
@@ -86,13 +77,5 @@
             </tr>
             </tbody>
         </table>
-    </div>
-    <div *ngIf="inventories && inventories.length">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-        </div>
     </div>
 </div>
